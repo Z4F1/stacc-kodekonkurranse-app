@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Assets</ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="updatePage(0)">
+            <ion-icon slot="icon-only" name="refresh"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-select (ionChange)="sortbyChanged($event)" [interfaceOptions]="sortingOptions" value="sale_date">
+                    <ion-select-option [disabled]="sorting == 'desc'" value="sale_price">Sale price</ion-select-option>
+                    <ion-select-option value="sale_date">Sale date</ion-select-option>
+                    <ion-select-option value="sale_count">Sale count</ion-select-option>
+                </ion-select>
+            </ion-col>
+            <ion-col>
+                <ion-select (ionChange)="sortingChanged($event)" [interfaceOptions]="sortingOptions" value="desc">
+                    <ion-select-option [disabled]="sortby == 'sale_price'" value="desc">Descending</ion-select-option>
+                    <ion-select-option value="asc">Ascending</ion-select-option>
+                </ion-select>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col style="text-align: center;">
+                <span>Page: {{page+1}}</span>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-list lines="none">
+        <ion-item *ngFor="let asset of assets">
+            <ion-card button="true" (click)="openDetailView(asset.asset_contract.address, asset.token_id)" style="width: 100%;">
+                <img [src]="asset.image_preview_url"  style="width: 100%;" />
+                <ion-card-header>
+                    <ion-card-title>{{asset.name}}</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-item>
+    </ion-list>
+    <ion-grid>
+        <ion-row>
+            <ion-col *ngIf="page > 0">
+                <ion-button expand="block" (click)="updatePage(-1)"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+                <p>Page: {{page+1}}</p>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="block" (click)="updatePage(1)"><ion-icon name="arrow-forward-outline"></ion-icon></ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

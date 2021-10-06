@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-button (click)="closeModal()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-title>{{asset.name}}</ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="loadBids()">
+            <ion-icon slot="icon-only" name="refresh"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <img [src]="asset.image_preview_url"  style="width: 100%;" />
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <strong><p>Last sale:</p></strong>
+            </ion-col>
+            <ion-col size="8" style="text-align: right;">
+                <p *ngIf="asset.last_sale != null">
+                    {{asset.last_sale.total_price}} WEI
+                    <br />
+                    <span *ngIf="asset.last_sale.total_price > 1000000000000000">{{asset.last_sale.total_price/1000000000000000000}} ETH</span>
+                </p>
+                <p *ngIf="asset.last_sale == null">No last sale</p>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <form (ngSubmit)="placeBid()" [formGroup]="bidData">
+        <ion-list lines="full">
+            <ion-item>
+                <ion-input placeholder="Amount" type="number" formControlName="amount"></ion-input>
+                <ion-label>WEI</ion-label>
+            </ion-item>
+        </ion-list>
+        <ion-button type="submit" fill="clear" expand="block">Submit bid</ion-button>
+    </form>
+    <hr >
+    <div *ngIf="bids.length > 0">
+        <h2>Bids:</h2>
+        <ion-list lines="full">
+            <ion-item *ngFor="let bid of bids">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <br *ngIf="bid.amount > 1000000000000000" />
+                            <p *ngIf="bid.isuser">Your bid</p>
+                        </ion-col>
+                        <ion-col size="9">
+                            <h5>{{bid.amount}} WEI</h5>
+                            <h6 *ngIf="bid.amount > 1000000000000000">{{bid.amount/1000000000000000000}} ETH</h6>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </ion-list>
+    </div>
+</ion-content>

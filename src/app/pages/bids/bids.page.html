@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Your bids</ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="getBids()">
+            <ion-icon slot="icon-only" name="refresh"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <h1>
+        Your top bids:
+    </h1>
+    <ion-grid>
+        <ion-row *ngFor="let bid of bids">
+            <ion-col (click)="openDetailView(bid.contract_address, bid.token_id)">
+                <p style="font-size: 14px;">
+                    <strong>Asset contract address:</strong><br />{{bid.contract_address}}:
+                    <br />
+                    <span style="font-size: 10px;"><strong>Token id:</strong><br /> {{bid.token_id}}</span>
+                </p>
+                <p>
+                    Amount:
+                    <br />
+                    {{bid.amount}} WEI
+                    <br />
+                    <span *ngIf="bid.amount > 1000000000000000">{{bid.amount/1000000000000000000}} ETH</span>
+                </p>
+                <hr>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
