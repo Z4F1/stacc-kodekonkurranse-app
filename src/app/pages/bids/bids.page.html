@@ -16,6 +16,7 @@
     <ion-grid>
         <ion-row *ngFor="let bid of bids">
             <ion-col (click)="openDetailView(bid.contract_address, bid.token_id)">
+                <h1>Name: {{bid.name}}</h1>
                 <p style="font-size: 14px;">
                     <strong>Asset contract address:</strong><br />{{bid.contract_address}}:
                     <br />

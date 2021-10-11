@@ -5,7 +5,7 @@
             <ion-icon slot="icon-only" name="close"></ion-icon>
         </ion-button>
     </ion-buttons>
-    <ion-title>{{asset.name}}</ion-title>
+    <ion-title *ngIf="asset != null">{{asset.name}}</ion-title>
     <ion-buttons slot="end">
         <ion-button (click)="loadBids()">
             <ion-icon slot="icon-only" name="refresh"></ion-icon>
@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content fullscreen>
-    <img [src]="asset.image_preview_url"  style="width: 100%;" />
+    <img *ngIf="asset != null" [src]="asset.image_preview_url"  style="width: 100%;" />
     <ion-grid>
         <ion-row>
             <ion-col>

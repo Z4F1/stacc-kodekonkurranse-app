@@ -19,7 +19,9 @@ export class BidsPage implements OnInit {
         private alertController: AlertController
     ) { }
 
-    async ngOnInit() {
+    async ngOnInit() {}
+
+    async ionViewWillEnter(){
         await this.getBids()
     }
 

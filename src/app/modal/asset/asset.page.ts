@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { LoadingController, AlertController, ModalController } from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-asset',
@@ -14,7 +14,7 @@ export class AssetPage implements OnInit {
     @Input() id: string
 
     bidData: FormGroup
-    asset = {}
+    asset: any = {}
     bids = []
 
     constructor(
@@ -27,9 +27,10 @@ export class AssetPage implements OnInit {
 
     async ngOnInit() {
         this.bidData = this.fb.group({
+            name: [],
             contract_address: [],
             token_id:[],
-            amount: [, Validators.required]
+            amount: new FormControl(0, [Validators.required, Validators.min(0.0001)])
         })
 
 
@@ -93,10 +94,15 @@ export class AssetPage implements OnInit {
         })
         await loading.present()
 
-        this.bidData.controls["contract_address"].setValue(this.address)
-        this.bidData.controls["token_id"].setValue(this.id)
-
         try {
+            if(this.bidData.dirty && this.bidData.valid){
+                this.bidData.controls["name"].setValue(this.asset.name)
+                this.bidData.controls["contract_address"].setValue(this.address)
+                this.bidData.controls["token_id"].setValue(this.id)
+            }else {
+                throw new Error("Not a valid input")
+            }
+
             const bidEntry = await this.apiService.postBid(this.bidData.value)
 
             console.log(bidEntry)
@@ -107,7 +113,7 @@ export class AssetPage implements OnInit {
             console.log(error)
             await loading.dismiss()
             const alert = await this.alertController.create({
-                header: "Placing bid failed",
+                header: "Failed to place bid.",
                 message: error.message,
                 buttons: ["OK"]
             })

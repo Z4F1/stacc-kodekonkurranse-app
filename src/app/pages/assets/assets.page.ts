@@ -78,14 +78,34 @@ export class AssetsPage implements OnInit {
     }
 
     async openDetailView(address: string, id: string){
-        console.log({address, id})
-        const modal = await this.modalController.create({
-            component: AssetPage,
-            componentProps: {
-                "address": address,
-                "id": id
-            }
+        const loading = await this.loadingController.create({
+            message: "Loading asset..."
         })
-        return await modal.present()
+        await loading.present()
+        try {
+            const assetData = await this.apiService.getAsset(address, id)
+            console.log(assetData)
+            await loading.dismiss()
+            
+            const modal = await this.modalController.create({
+                component: AssetPage,
+                componentProps: {
+                    "address": address,
+                    "id": id,
+                    "asset": assetData
+                }
+            })
+            return await modal.present()
+        } catch (error) {
+            console.log(error)
+            await loading.dismiss()
+            const alert = await this.alertController.create({
+                header: "Something went wrong",
+                message: error.message,
+                buttons: ["OK"]
+            })
+            await alert.present()
+        }
+        
     }
 }

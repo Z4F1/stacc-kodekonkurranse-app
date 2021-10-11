@@ -27,6 +27,13 @@ export class LoginPage implements OnInit {
         })
     }
 
+    async ionViewWillEnter(){
+        this.credentials = this.fb.group({
+            username: ["", Validators.required],
+            password: ["", Validators.required]
+        })
+    }
+
     async login() {
         const loading = await this.loadingController.create({
             message: "Trying to log you inn..."
@@ -51,7 +58,26 @@ export class LoginPage implements OnInit {
     }
 
     async signup(){
+        const loading = await this.loadingController.create({
+            message: "Trying to sign you up and log you inn..."
+        })
+        await loading.present()
 
+        try {
+            await this.apiService.signup(this.credentials.value)
+            
+            await loading.dismiss()
+            this.router.navigateByUrl("/")
+        } catch (error) {
+            console.log(error)
+            await loading.dismiss()
+            const alert = await this.alertController.create({
+                header: "Login failed",
+                message: error.message,
+                buttons: ["OK"]
+            })
+            await alert.present();
+        }
     }
 
 }

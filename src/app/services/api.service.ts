@@ -1,6 +1,6 @@
 import { environment } from "./../../environments/environment"
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, from } from 'rxjs';
+import { BehaviorSubject, from, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Storage } from '@capacitor/storage';
 import { Router } from '@angular/router';
@@ -27,7 +27,6 @@ export class ApiService {
     //6e213345441563d48a31b769e1d63466
     async loadToken() {
         const token = await Storage.get({key: "jwt"})
-        console.log(token)
         if(token && token.value){
             this.http.get(this.url + "/verify", {
                 headers: new HttpHeaders({
@@ -63,7 +62,6 @@ export class ApiService {
         }).subscribe(
             data => {
                 this.userdata = data
-                console.log(this.userdata)
             },
             err => {
                 console.log(err)
@@ -77,15 +75,34 @@ export class ApiService {
                 headers: new HttpHeaders({
                     "api-key": this.secretkey
                 })
-            }).subscribe(data => {
-                this.currentToken = data
+            }).subscribe(async data => {
                 Storage.set({key: "jwt", value: data.toString()})
-
-                this.isAuthenticated.next(true)
+                
+                await this.loadToken()
                 
                 resolve(data)
             }, err => {
                 this.errorHandler(err.error, reject)
+            })
+        })
+    }
+
+    async signup(credentials: {username, password}){
+        return new Promise((resolve, reject) => {
+            this.http.post(this.url + "/users/", credentials, {
+                headers: new HttpHeaders({
+                    "api-key": this.secretkey
+                })
+            }).subscribe(async d => {
+                try {
+                    const data = await this.login(credentials)
+
+                    resolve(data)
+                } catch (error) {
+                    throw error
+                }
+            }, err => {
+                reject(err)
             })
         })
     }

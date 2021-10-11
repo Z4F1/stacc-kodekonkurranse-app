@@ -10,15 +10,20 @@ import { Router } from '@angular/router';
 })
 export class UserPage implements OnInit {
     userData = null
+    newpassword: any
 
     constructor(
         private apiService: ApiService,
         private alertController: AlertController,
         private router: Router,
-        private loadingController: LoadingController
+        private loadingController: LoadingController,
         ) { }
 
     async ngOnInit() {
+        this.userData = this.apiService.userdata
+    }
+
+    async ionViewWillEnter(){
         this.userData = this.apiService.userdata
     }
 

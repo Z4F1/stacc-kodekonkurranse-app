@@ -9,12 +9,12 @@
     <br>
     <form (ngSubmit)="login()" [formGroup]="credentials">
         <ion-list lines="full">
-        <ion-item>
-            <ion-input type="text" placeholder="Username" formControlName="username"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
-        </ion-item>
+            <ion-item>
+                <ion-input type="text" placeholder="Username" formControlName="username"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+            </ion-item>
         </ion-list>
         <br>
         <ion-button expand="full" type="submit" [disabled]="!credentials.valid">Log in</ion-button>
