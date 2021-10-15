@@ -38,13 +38,19 @@ export class BidsPage implements OnInit {
                 return b.amount-a.amount
             })
 
-            console.log(bids)
-
             for (let bid of bids){
                 if(!this.bids.some(b => (b.token_id == bid.token_id && b.contract_address == bid.contract_address))){
+                    let d = new Date(bid.createdAt)
+                    bid.createdAtString = d.toLocaleString()
                     this.bids.push(bid)
                 }
             }
+
+            this.bids.sort((a, b) => {
+                a = new Date(a.createdAt)
+                b = new Date(b.createdAt)
+                return b.getTime() - a.getTime()
+            })
 
             console.log(this.bids)
             await loading.dismiss()
