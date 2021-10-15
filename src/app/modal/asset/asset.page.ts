@@ -30,7 +30,8 @@ export class AssetPage implements OnInit {
             name: [],
             contract_address: [],
             token_id:[],
-            amount: new FormControl(0, [Validators.required, Validators.min(0.0001)])
+            amount: new FormControl(0, [Validators.required, Validators.min(0.0001)]),
+            currency: ["wei", Validators.required]
         })
 
 
@@ -99,6 +100,10 @@ export class AssetPage implements OnInit {
                 this.bidData.controls["name"].setValue(this.asset.name)
                 this.bidData.controls["contract_address"].setValue(this.address)
                 this.bidData.controls["token_id"].setValue(this.id)
+                if(this.bidData.controls["currency"].value == "eth"){
+                    let eth = this.bidData.controls["amount"].value
+                    this.bidData.controls["amount"].setValue(eth * 1000000000000000000)
+                }
             }else {
                 throw new Error("Not a valid input")
             }
@@ -107,6 +112,10 @@ export class AssetPage implements OnInit {
 
             console.log(bidEntry)
             await loading.dismiss()
+
+            this.bidData.reset()
+            this.bidData.controls["amount"].setValue(0)
+            this.bidData.controls["currency"].setValue("wei")
 
             await this.loadBids()
         } catch (error) {

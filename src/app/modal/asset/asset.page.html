@@ -34,8 +34,19 @@
     <form (ngSubmit)="placeBid()" [formGroup]="bidData">
         <ion-list lines="full">
             <ion-item>
-                <ion-input placeholder="Amount" type="number" formControlName="amount"></ion-input>
-                <ion-label>WEI</ion-label>
+                <ion-label>
+                    <strong>Amount:</strong>
+                </ion-label>
+                <ion-input placeholder="Amount" value="" type="number" formControlName="amount" style="text-align: right;"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>
+                    <strong>Currency:</strong>
+                </ion-label>
+                <ion-select formControlName="currency" value="wei">
+                    <ion-select-option value="wei">WEI</ion-select-option>
+                    <ion-select-option value="eth">ETH</ion-select-option>
+                </ion-select>
             </ion-item>
         </ion-list>
         <ion-button type="submit" fill="clear" expand="block">Submit bid</ion-button>

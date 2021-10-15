@@ -11,24 +11,26 @@
 
 <ion-content fullscreen>
     <h1>
-        Your top bids:
+        Your Bids:
     </h1>
     <ion-grid>
         <ion-row *ngFor="let bid of bids">
             <ion-col (click)="openDetailView(bid.contract_address, bid.token_id)">
-                <h1>Name: {{bid.name}}</h1>
-                <p style="font-size: 14px;">
-                    <strong>Asset contract address:</strong><br />{{bid.contract_address}}:
-                    <br />
-                    <span style="font-size: 10px;"><strong>Token id:</strong><br /> {{bid.token_id}}</span>
-                </p>
-                <p>
-                    Amount:
-                    <br />
-                    {{bid.amount}} WEI
-                    <br />
-                    <span *ngIf="bid.amount > 1000000000000000">{{bid.amount/1000000000000000000}} ETH</span>
-                </p>
+                <h3>Name: {{bid.name}}</h3>
+                <div style="text-align: center;">
+                    <p>
+                        <strong>Amount:</strong>
+                        <br />
+                        {{bid.amount}} WEI
+                        <br />
+                        <span *ngIf="bid.amount > 1000000000000000"> = {{bid.amount/1000000000000000000}} ETH</span>
+                    </p>
+                    <p>
+                        <strong>Placed bid:</strong>
+                        <br />
+                        {{bid.createdAtString}}
+                    </p>
+                </div>
                 <hr>
             </ion-col>
         </ion-row>

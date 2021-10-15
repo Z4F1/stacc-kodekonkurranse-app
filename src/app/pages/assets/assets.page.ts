@@ -84,7 +84,6 @@ export class AssetsPage implements OnInit {
         await loading.present()
         try {
             const assetData = await this.apiService.getAsset(address, id)
-            console.log(assetData)
             await loading.dismiss()
             
             const modal = await this.modalController.create({

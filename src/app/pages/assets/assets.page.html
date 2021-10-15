@@ -14,8 +14,8 @@
         <ion-row>
             <ion-col>
                 <ion-select (ionChange)="sortbyChanged($event)" [interfaceOptions]="sortingOptions" value="sale_date">
-                    <ion-select-option [disabled]="sorting == 'desc'" value="sale_price">Sale price</ion-select-option>
-                    <ion-select-option value="sale_date">Sale date</ion-select-option>
+                    <ion-select-option [disabled]="sorting == 'desc'" value="sale_price">Last sale price</ion-select-option>
+                    <ion-select-option value="sale_date">Last sale date</ion-select-option>
                     <ion-select-option value="sale_count">Sale count</ion-select-option>
                 </ion-select>
             </ion-col>
