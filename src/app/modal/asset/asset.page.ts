@@ -44,7 +44,7 @@ export class AssetPage implements OnInit {
 
             await loading.dismiss()
             this.asset = data
-            console.log(this.asset)
+
             await this.loadBids()
         } catch (error) {
             console.log(error)
@@ -105,7 +105,6 @@ export class AssetPage implements OnInit {
 
             const bidEntry = await this.apiService.postBid(this.bidData.value)
 
-            console.log(bidEntry)
             await loading.dismiss()
 
             await this.loadBids()

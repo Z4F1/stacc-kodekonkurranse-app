@@ -38,15 +38,12 @@ export class BidsPage implements OnInit {
                 return b.amount-a.amount
             })
 
-            console.log(bids)
-
             for (let bid of bids){
                 if(!this.bids.some(b => (b.token_id == bid.token_id && b.contract_address == bid.contract_address))){
                     this.bids.push(bid)
                 }
             }
 
-            console.log(this.bids)
             await loading.dismiss()
         } catch (error) {
             await loading.dismiss()
