@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Settings</ion-title>
+        <ion-buttons slot="primary">
+            <ion-button (click)="logout()">
+            <ion-icon slot="icon-only" name="log-out"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <h1>Hello, {{userData.username}}</h1>
+    <br />
+    <ion-list lines="full">
+        <ion-item>
+            <ion-label>Dark mode</ion-label>
+            <ion-toggle (ionChange)="changeDarkMode($event)" [checked]="darkMode"></ion-toggle>
+        </ion-item>
+    </ion-list>
+    <br />
+    <ion-list>
+        <ion-item>
+            
+        </ion-item>
+    </ion-list>
+</ion-content>

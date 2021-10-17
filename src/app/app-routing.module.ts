@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'asset',
     loadChildren: () => import('./modal/asset/asset.module').then( m => m.AssetPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   }
 ];
 

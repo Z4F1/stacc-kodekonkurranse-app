@@ -51,8 +51,7 @@ export class BidsPage implements OnInit {
                 b = new Date(b.createdAt)
                 return b.getTime() - a.getTime()
             })
-
-            console.log(this.bids)
+            
             await loading.dismiss()
         } catch (error) {
             await loading.dismiss()
