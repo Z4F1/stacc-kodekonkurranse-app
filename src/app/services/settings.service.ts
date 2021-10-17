@@ -8,9 +8,13 @@ export class SettingsService {
 
     private prefersDark: any
     public darkMode: boolean
+    public standardCurrency: string
 
-    constructor() {
+    constructor() {}
+
+    async loadSettings(){
         this.loadDarkTheme()
+        this.loadStandardCurrency()
     }
 
     async loadDarkTheme(){
@@ -29,6 +33,15 @@ export class SettingsService {
         }
     }
 
+    async loadStandardCurrency(){
+        const currency = await Storage.get({ key: "standardCurrency"})
+        if(currency && currency.value != null){
+            this.standardCurrency = currency.value
+        }else {
+            await this.setStandardCurrency("wei")
+        }
+    }
+
     setDarkTheme(val){
         let d = document.body.classList.toggle("dark", val)
         console.log(typeof val)
@@ -38,5 +51,10 @@ export class SettingsService {
     async setDarkMode(val){
         await Storage.set({ key: "darkMode", value: val})
         this.setDarkTheme(val)
+    }
+
+    async setStandardCurrency(val){
+        this.standardCurrency = val
+        await Storage.set({ key: "standardCurrency", value: val})
     }
 }

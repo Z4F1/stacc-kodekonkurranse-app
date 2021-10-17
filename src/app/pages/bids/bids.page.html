@@ -21,9 +21,8 @@
                     <p>
                         <strong>Amount:</strong>
                         <br />
-                        {{bid.amount}} WEI
-                        <br />
-                        <span *ngIf="bid.amount > 1000000000000000"> = {{bid.amount/1000000000000000000}} ETH</span>
+                        <span *ngIf="currency == 'wei'">{{bid.amount}} WEI</span>
+                        <span *ngIf="currency == 'eth'">{{bid.amount/1000000000000000000}} ETH</span>
                     </p>
                     <p>
                         <strong>Placed bid:</strong>

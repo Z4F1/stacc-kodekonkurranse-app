@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { AssetPage } from 'src/app/modal/asset/asset.page';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-bids',
@@ -11,18 +12,21 @@ import { AssetPage } from 'src/app/modal/asset/asset.page';
 export class BidsPage implements OnInit {
 
     bids = []
+    currency = "wei"
 
     constructor(
         private apiService: ApiService,
         private modalController: ModalController,
         private loadingController: LoadingController,
-        private alertController: AlertController
+        private alertController: AlertController,
+        private settingsService: SettingsService
     ) { }
 
     async ngOnInit() {}
 
     async ionViewWillEnter(){
         await this.getBids()
+        this.currency = this.settingsService.standardCurrency
     }
 
     async getBids() {

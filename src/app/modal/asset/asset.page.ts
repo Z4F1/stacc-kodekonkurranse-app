@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { LoadingController, AlertController, ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-asset',
@@ -16,14 +17,18 @@ export class AssetPage implements OnInit {
     bidData: FormGroup
     asset: any = {}
     bids = []
+    currency = "eth"
 
     constructor(
         private apiService: ApiService,
         private loadingController: LoadingController,
         private alertController: AlertController,
         private modalController: ModalController,
-        private fb: FormBuilder
-    ) {}
+        private fb: FormBuilder,
+        private settingsService: SettingsService
+    ) {
+        this.currency = this.settingsService.standardCurrency
+    }
 
     async ngOnInit() {
         this.bidData = this.fb.group({

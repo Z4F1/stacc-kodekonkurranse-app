@@ -9,5 +9,7 @@ import { SettingsService } from './services/settings.service';
 export class AppComponent {
   constructor(
       private settingsService: SettingsService
-  ) {}
+  ) {
+      this.settingsService.loadSettings()
+  }
 }
