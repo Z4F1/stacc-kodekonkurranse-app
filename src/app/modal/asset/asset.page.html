@@ -23,9 +23,8 @@
             </ion-col>
             <ion-col size="8" style="text-align: right;">
                 <p *ngIf="asset.last_sale != null">
-                    {{asset.last_sale.total_price}} WEI
-                    <br />
-                    <span *ngIf="asset.last_sale.total_price > 1000000000000000">{{asset.last_sale.total_price/1000000000000000000}} ETH</span>
+                    <span *ngIf="currency == 'wei'">{{asset.last_sale.total_price}} WEI</span>
+                    <span *ngIf="currency == 'eth'">{{asset.last_sale.total_price/1000000000000000000}} ETH</span>
                 </p>
                 <p *ngIf="asset.last_sale == null">No last sale</p>
             </ion-col>
@@ -43,7 +42,7 @@
                 <ion-label>
                     <strong>Currency:</strong>
                 </ion-label>
-                <ion-select formControlName="currency" value="wei">
+                <ion-select formControlName="currency" [value]="currency">
                     <ion-select-option value="wei">WEI</ion-select-option>
                     <ion-select-option value="eth">ETH</ion-select-option>
                 </ion-select>
@@ -59,12 +58,13 @@
                 <ion-grid>
                     <ion-row>
                         <ion-col>
-                            <br *ngIf="bid.amount > 1000000000000000" />
                             <p *ngIf="bid.isuser">Your bid</p>
                         </ion-col>
                         <ion-col size="9">
-                            <h5>{{bid.amount}} WEI</h5>
-                            <h6 *ngIf="bid.amount > 1000000000000000">{{bid.amount/1000000000000000000}} ETH</h6>
+                            <h6>
+                                <span *ngIf="currency == 'wei'">{{bid.amount}} WEI</span>
+                                <span *ngIf="currency == 'eth'">{{bid.amount/1000000000000000000}} ETH</span>
+                            </h6>
                         </ion-col>
                     </ion-row>
                 </ion-grid>

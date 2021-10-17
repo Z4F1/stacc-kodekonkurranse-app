@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Settings</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <h1>Hello, {{userData.username}}</h1>
+    <br />
+    <ion-list lines="full">
+        <ion-item>
+            <ion-label>Dark mode</ion-label>
+            <ion-toggle (ionChange)="changeDarkMode($event)" [checked]="darkMode"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Standard currency</ion-label>
+            <ion-select (ionChange)="changeStandardCurrency($event)" [value]="standardCurrency">
+                <ion-select-option value="wei">WEI</ion-select-option>
+                <ion-select-option value="eth">ETH</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <br />
+    <br />
+    <ion-list>
+        <ion-item button detail="false" color="danger" (click)="logout()">
+            <ion-icon slot="end" name="log-out-outline"></ion-icon>
+            <ion-label>Log out</ion-label>
+        </ion-item>
+    </ion-list>
+    <br />
+    <div class="padding">
+        <h2>About</h2>
+        <p>
+            This is just a programming challenge by <a href="https://stacc.com/">Stacc AS</a>
+            where we had to create something either with the <a href="https://docs.opensea.io/">OpenSea API</a>
+            or something along the lines of NFTs atleast. So here is my app, it uses a backend I've created with Node.js and Express.
+            The app is made with <a href="https://ionicframework.com/">Ionic</a> and Angular (which is built in the Ionic Framework).
+            <br />
+            <br />
+            In this app, you can bid on items from the OpenSea API which is then sent to the backend and stored with MongoDB.
+            At the bottom of each Asset Page, you can see all the bids on that particular item. If it is your bid, it will say so.
+        </p>
+    </div>
+</ion-content>
